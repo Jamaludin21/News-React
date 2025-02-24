@@ -3,7 +3,7 @@ import { List, Card, Col, Row } from "antd";
 import NewsItem from "./itemNews";
 import { fetchNews } from "../api/apiFetch";
 
-const NewsList = ({ query }) => {
+const NewsList = ({ query, countryID }) => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,7 +20,7 @@ const NewsList = ({ query }) => {
   useEffect(() => {
     const getNews = async () => {
       setLoading(true);
-      const articlesData = await fetchNews(query);
+      const articlesData = await fetchNews(query, countryID);
 
       const filteredArticles = articlesData?.articles.filter(
         (article) => article.title !== "[Removed]"
@@ -29,7 +29,7 @@ const NewsList = ({ query }) => {
       setLoading(false);
     };
     getNews();
-  }, [query]);
+  }, [query, countryID]);
 
   const loadingSkeletons = Array.from({ length: 9 }).map((_, index) => (
     <Col key={index} xs={24} sm={12} md={12} lg={8} xl={8}>
