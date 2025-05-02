@@ -11,6 +11,25 @@ const NewsList = ({ query, countryID }) => {
     JSON.parse(localStorage.getItem("readArticles")) || []
   );
 
+  const [skeletonCount, setSkeletonCount] = useState(12); // default
+
+  useEffect(() => {
+    const calculateSkeletonCount = () => {
+      const viewportHeight = window.innerHeight;
+      const cardHeight = 250; // Estimate or measure this value
+      const rows = Math.ceil(viewportHeight / cardHeight);
+      const columns = 3; // Match your grid column count
+      setSkeletonCount(rows * columns);
+    };
+
+    calculateSkeletonCount();
+    window.addEventListener("resize", calculateSkeletonCount);
+
+    return () => {
+      window.removeEventListener("resize", calculateSkeletonCount);
+    };
+  }, []);
+
   const handleMarkAsRead = (newReadArticle) => {
     const updatedReadArticles = [...readArticles, newReadArticle];
     setReadArticles(updatedReadArticles);
@@ -31,11 +50,13 @@ const NewsList = ({ query, countryID }) => {
     getNews();
   }, [query, countryID]);
 
-  const loadingSkeletons = Array.from({ length: 9 }).map((_, index) => (
-    <Col key={index} xs={24} sm={12} md={12} lg={8} xl={8}>
-      <Card loading />
-    </Col>
-  ));
+  const loadingSkeletons = Array.from({ length: skeletonCount }).map(
+    (_, index) => (
+      <Col key={index} xs={24} sm={12} md={12} lg={8} xl={8}>
+        <Card loading />
+      </Col>
+    )
+  );
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -51,6 +72,8 @@ const NewsList = ({ query, countryID }) => {
         current: currentPage,
         onChange: handlePageChange,
         align: "center",
+        defaultPageSize: 15,
+        pageSizeOptions: [15, 30, 60, 120],
       }}
       dataSource={news}
       renderItem={(item) => (

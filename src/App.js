@@ -1,13 +1,13 @@
 import { Spin } from "antd";
-import "./App.css";
-import HomePage from "./pages/MainPage";
+import "./styles/App.css";
 import { Suspense } from "react";
+import Routing from "./Routing";
 
 function App() {
   return (
     <div className="App">
       <Suspense fallback={<Spin spinning fullscreen />}>
-        <HomePage />
+        <Routing />
       </Suspense>
     </div>
   );

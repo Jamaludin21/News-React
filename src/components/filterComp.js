@@ -1,5 +1,6 @@
 import React from "react";
 import { Input, Select } from "antd";
+import { listCodeCountry } from "../utils/dataHelper";
 const { Search } = Input;
 
 export const SearchBar = ({ onSearch }) => {
@@ -20,20 +21,7 @@ export const SelectCountry = ({ onSelect, dropdownWidth, dropdownRef }) => {
       defaultValue=""
       style={{ width: dropdownWidth }}
       ref={dropdownRef}
-      options={[
-        {
-          value: "",
-          label: "All Country",
-        },
-        {
-          value: "id",
-          label: "Indonesia",
-        },
-        {
-          value: "us",
-          label: "United States",
-        },
-      ]}
+      options={listCodeCountry}
     />
   );
 };

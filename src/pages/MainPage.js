@@ -26,7 +26,7 @@ const HomePage = () => {
   }, [countryID]);
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="p-5">
       <Flex gap={4}>
         <SelectCountry
           onSelect={handleSelectedCountry}
