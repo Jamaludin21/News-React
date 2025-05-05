@@ -1,16 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
-import { SearchBar, SelectCountry } from "../components/filterComp";
+import {
+  SearchBar,
+  SelectCategory,
+  SelectCountry,
+} from "../components/filterComp";
 import NewsList from "../components/listNews";
 import { Flex } from "antd";
 
 const HomePage = () => {
-  const [query, setQuery] = useState("latest");
+  const [query, setQuery] = useState("");
+  const [categoryID, setCategoryID] = useState("");
   const [countryID, setCountryID] = useState("");
   const [dropdownWidth, setDropdownWidth] = useState("auto");
   const dropdownRef = useRef(null);
 
   const handleSearch = (value) => {
     setQuery(value);
+  };
+
+  const handleSelectedCatagory = (value) => {
+    setCategoryID(value);
   };
 
   const handleSelectedCountry = (value) => {
@@ -23,7 +32,7 @@ const HomePage = () => {
       const textWidth = dropdownRef.current.offsetWidth;
       setDropdownWidth(`${textWidth}px`);
     }
-  }, [countryID]);
+  }, [categoryID]);
 
   return (
     <div className="p-5">
@@ -33,10 +42,16 @@ const HomePage = () => {
           dropdownWidth={dropdownWidth}
           dropdownRef={dropdownRef}
         />
-
+        <SelectCategory
+          onSelect={handleSelectedCatagory}
+          dropdownWidth={dropdownWidth}
+          dropdownRef={dropdownRef}
+        />
         <SearchBar onSearch={handleSearch} />
       </Flex>
-      <NewsList query={query} countryID={countryID} />
+      <div className="p-10">
+        <NewsList query={query} categoryID={categoryID} countryID={countryID} />
+      </div>
     </div>
   );
 };

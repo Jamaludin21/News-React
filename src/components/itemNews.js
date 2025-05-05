@@ -7,8 +7,7 @@ const NewsItem = ({ news, readArticles, onMarkAsRead }) => {
     news;
   const { name } = source;
 
-  const dateSplit = publishedAt.split("T");
-  const dayDate = dateSplit[0];
+  const dayDate = publishedAt ? publishedAt.split("T")[0] : "Unknown";
   const isAlreadyRead = readArticles.some((article) => article.url === url);
 
   const handleNewsClick = () => {
@@ -16,7 +15,6 @@ const NewsItem = ({ news, readArticles, onMarkAsRead }) => {
 
     if (!isAlreadyRead) {
       const newReadArticle = { title, url, urlToImage };
-      readArticles.push(newReadArticle);
       onMarkAsRead(newReadArticle);
     }
   };
@@ -25,12 +23,17 @@ const NewsItem = ({ news, readArticles, onMarkAsRead }) => {
     <Card
       hoverable
       cover={
-        <div
+        <img
+          src={urlToImage || faultImage}
+          alt={title}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = faultImage;
+          }}
           style={{
-            backgroundImage: `url(${urlToImage || faultImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            objectFit: "cover",
             height: 250,
+            width: "100%",
           }}
         />
       }
@@ -39,7 +42,7 @@ const NewsItem = ({ news, readArticles, onMarkAsRead }) => {
       <Flex gap={16} vertical>
         <Card.Meta
           title={title}
-          {...(!isAlreadyRead && { description: description })}
+          description={!isAlreadyRead ? description : null}
         />
         {!isAlreadyRead && (
           <Flex vertical gap={4}>

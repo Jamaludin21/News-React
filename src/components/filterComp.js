@@ -1,6 +1,6 @@
 import React from "react";
 import { Input, Select } from "antd";
-import { listCodeCountry } from "../utils/dataHelper";
+import { listCodeCategory, listCodeCountry } from "../utils/dataHelper";
 const { Search } = Input;
 
 export const SearchBar = ({ onSearch }) => {
@@ -10,6 +10,18 @@ export const SearchBar = ({ onSearch }) => {
       onSearch={onSearch}
       enterButton
       style={{ marginBottom: "20px" }}
+    />
+  );
+};
+
+export const SelectCategory = ({ onSelect, dropdownWidth, dropdownRef }) => {
+  return (
+    <Select
+      onChange={(data) => onSelect(data)}
+      defaultValue=""
+      style={{ width: dropdownWidth }}
+      ref={dropdownRef}
+      options={listCodeCategory}
     />
   );
 };

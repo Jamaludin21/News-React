@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { List, Card, Col, Row } from "antd";
 import NewsItem from "./itemNews";
 import { fetchNews } from "../api/apiFetch";
 
-const NewsList = ({ query, countryID }) => {
+const NewsList = ({ query, categoryID, countryID }) => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [readArticles, setReadArticles] = useState(
-    JSON.parse(localStorage.getItem("readArticles")) || []
-  );
+  const [readArticles, setReadArticles] = useState(() => {
+    return JSON.parse(localStorage.getItem("readArticles")) || [];
+  });
 
   const [skeletonCount, setSkeletonCount] = useState(12); // default
 
@@ -31,24 +31,33 @@ const NewsList = ({ query, countryID }) => {
   }, []);
 
   const handleMarkAsRead = (newReadArticle) => {
-    const updatedReadArticles = [...readArticles, newReadArticle];
-    setReadArticles(updatedReadArticles);
-    localStorage.setItem("readArticles", JSON.stringify(updatedReadArticles));
+    if (!readArticles.includes(newReadArticle)) {
+      const updatedReadArticles = [...readArticles, newReadArticle];
+      setReadArticles(updatedReadArticles);
+      localStorage.setItem("readArticles", JSON.stringify(updatedReadArticles));
+    }
   };
 
-  useEffect(() => {
-    const getNews = async () => {
-      setLoading(true);
-      const articlesData = await fetchNews(query, countryID);
+  const getNews = useCallback(async () => {
+    setLoading(true);
+    const articlesData = await fetchNews(query, categoryID, countryID);
 
-      const filteredArticles = articlesData?.articles.filter(
-        (article) => article.title !== "[Removed]"
-      );
-      setNews(filteredArticles);
+    if (!articlesData || !articlesData.articles) {
+      setNews([]);
       setLoading(false);
-    };
+      return;
+    }
+
+    const filteredArticles = articlesData?.articles.filter(
+      (article) => article.title !== "[Removed]"
+    );
+    setNews(filteredArticles);
+    setLoading(false);
+  }, [query, categoryID, countryID]);
+
+  useEffect(() => {
     getNews();
-  }, [query, countryID]);
+  }, [getNews]);
 
   const loadingSkeletons = Array.from({ length: skeletonCount }).map(
     (_, index) => (
@@ -63,11 +72,19 @@ const NewsList = ({ query, countryID }) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  return loading || !news ? (
+  return loading ? (
     <Row gutter={[16, 16]}>{loadingSkeletons}</Row>
   ) : (
     <List
-      grid={{ gutter: 16, column: 3 }}
+      grid={{
+        gutter: 16,
+        xs: 1,
+        sm: 2,
+        md: 2,
+        lg: 3,
+        xl: 3,
+        xxl: 3,
+      }}
       pagination={{
         current: currentPage,
         onChange: handlePageChange,
