@@ -42,6 +42,45 @@ h2 {
   color: #61dafb;
 }
 
+.bg-clear {
+  background: linear-gradient(45deg, #4facfe, #00f2fe);
+}
+.bg-cloudy {
+  background: linear-gradient(45deg, #bdc3c7, #2c3e50);
+}
+.bg-rainy {
+  background: linear-gradient(45deg, #4b79a1, #283e51);
+}
+
+body.light-theme {
+  background-color: #ffffff;
+  color: #333;
+}
+body.dark-theme {
+  background-color: #1e1e1e;
+  color: #f9f9f9;
+}
+
+.weather-container {
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  padding: 50px;
+  color: white;
+  transition: background-image 0.5s ease;
+}
+
+.weather-selector {
+  margin-bottom: 30px;
+}
+
+.weather-card {
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 400px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

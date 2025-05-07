@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { List, Card, Col, Row } from "antd";
 import NewsItem from "./itemNews";
-import { fetchNews } from "../api/apiFetch";
+import { fetchNews } from "api/apiFetch";
 
 const NewsList = ({ query, categoryID, countryID }) => {
   const [news, setNews] = useState([]);

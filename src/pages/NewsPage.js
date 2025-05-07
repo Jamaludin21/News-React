@@ -3,8 +3,8 @@ import {
   SearchBar,
   SelectCategory,
   SelectCountry,
-} from "../components/filterComp";
-import NewsList from "../components/listNews";
+} from "components/filterComp";
+import NewsList from "components/listNews";
 import { Flex } from "antd";
 
 const HomePage = () => {

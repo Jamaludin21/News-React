@@ -1,6 +1,6 @@
 import React from "react";
 import { Input, Select } from "antd";
-import { listCodeCategory, listCodeCountry } from "../utils/dataHelper";
+import { listCodeCategory, listCodeCountry } from "utils/dataHelper";
 const { Search } = Input;
 
 export const SearchBar = ({ onSearch }) => {

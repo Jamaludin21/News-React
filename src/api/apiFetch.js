@@ -40,13 +40,17 @@ export const fetchNews = async (
   }
 };
 
-export const fetchWeather = async (latitude, longitude) => {
+export const fetchWeather = async (latitude, longitude, lang = "en") => {
   try {
     const response = await axios.get(`${WEATHER_BASE_URL}/forecast`, {
       params: {
         latitude,
         longitude,
         current_weather: true,
+        hourly: "temperature_2m,precipitation_probability",
+        timezone: "auto",
+        forecast_days: 1,
+        language: lang,
       },
     });
     return response.data.current_weather;

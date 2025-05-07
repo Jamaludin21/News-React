@@ -130,5 +130,4 @@ export const provinceCoordinates = [
   { name: "Papua Tengah", lat: -3.995, lon: 136.0826 },
   { name: "Papua Pegunungan", lat: -4.2325, lon: 138.8 },
   { name: "Papua Selatan", lat: -6.21, lon: 139.5 },
-  { name: "Papua Tengah", lat: -3.995, lon: 136.0826 },
 ];
