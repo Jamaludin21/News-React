@@ -4,10 +4,10 @@ import {
   SelectCategory,
   SelectCountry,
 } from "components/filterComp";
-import NewsList from "components/listNews";
+import NewsList from "components/News/listNews";
 import { Flex } from "antd";
 
-const HomePage = () => {
+const NewsPage = () => {
   const [query, setQuery] = useState("");
   const [categoryID, setCategoryID] = useState("");
   const [countryID, setCountryID] = useState("");
@@ -49,11 +49,11 @@ const HomePage = () => {
         />
         <SearchBar onSearch={handleSearch} />
       </Flex>
-      <div className="p-10">
+      <div>
         <NewsList query={query} categoryID={categoryID} countryID={countryID} />
       </div>
     </div>
   );
 };
 
-export default HomePage;
+export default NewsPage;

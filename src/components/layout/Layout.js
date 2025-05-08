@@ -17,9 +17,9 @@ const Layout = ({ children }) => {
           <Menu.Item key="/weather">
             <Link to="/weather">Weather</Link>
           </Menu.Item>
-          <Menu.Item key="/movies">
+          {/* <Menu.Item key="/movies">
             <Link to="/movies">Movies</Link>
-          </Menu.Item>
+          </Menu.Item> */}
         </Menu>
       </Header>
       <Content style={{ minHeight: "100vh" }}>{children}</Content>

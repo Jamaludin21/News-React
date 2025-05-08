@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { List, Card, Col, Row } from "antd";
 import NewsItem from "./itemNews";
 import { fetchNews } from "api/apiFetch";
+import { EmptyRender } from "components/emptyComp";
 
 const NewsList = ({ query, categoryID, countryID }) => {
   const [news, setNews] = useState([]);
@@ -10,7 +11,6 @@ const NewsList = ({ query, categoryID, countryID }) => {
   const [readArticles, setReadArticles] = useState(() => {
     return JSON.parse(localStorage.getItem("readArticles")) || [];
   });
-
   const [skeletonCount, setSkeletonCount] = useState(12); // default
 
   useEffect(() => {
@@ -72,9 +72,35 @@ const NewsList = ({ query, categoryID, countryID }) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  return loading ? (
-    <Row gutter={[16, 16]}>{loadingSkeletons}</Row>
-  ) : (
+  if (loading) {
+    return <Row gutter={[16, 16]}>{loadingSkeletons}</Row>;
+  }
+
+  if (news.length === 0) {
+    return (
+      <div
+        style={{
+          width: "100%",
+          minHeight: "60vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          boxSizing: "border-box",
+          textAlign: "center",
+        }}
+      >
+        <div style={{ maxWidth: "500px", width: "100%" }}>
+          <EmptyRender />
+          <p style={{ marginTop: "1rem", fontSize: "1.1rem", color: "#555" }}>
+            No articles found for the selected filters.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
     <List
       grid={{
         gutter: 16,

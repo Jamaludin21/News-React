@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Flex, Typography, Badge } from "antd";
-import faultImage from "../assets/No_Image_Available.jpg";
+import faultImage from "assets/No_Image_Available.jpg";
 
 const NewsItem = ({ news, readArticles, onMarkAsRead }) => {
   const { author, title, description, publishedAt, url, urlToImage, source } =
